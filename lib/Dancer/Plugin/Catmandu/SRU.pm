@@ -10,6 +10,8 @@ Version 0.02
 
 =cut
 
+our $VERSION = '0.02';
+
 use Catmandu::Sane;
 use Dancer::Plugin;
 use Dancer qw(:syntax);
