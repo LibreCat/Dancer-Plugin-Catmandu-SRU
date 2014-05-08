@@ -41,8 +41,8 @@ sub sru_provider {
 
     my $bag = Catmandu->store($setting->{store})->bag($setting->{bag});
 
-    my $default_limit = $setting->{limit} ||= $bag->default_limit;
-    my $maximum_limit = $setting->{maximum_limit} ||= $bag->maximum_limit;
+    my $default_limit = $setting->{limit} // $bag->default_limit;
+    my $maximum_limit = $setting->{maximum_limit} // $bag->maximum_limit;
 
     my $database_info = "";
     if ($setting->{title} || $setting->{description}) {
