@@ -1,4 +1,9 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
+{{$NEXT}}
+	- build with Dist::Milla
+	- docs
+	- tests
+
 0.02    2012-12-04
-       - initial release
+    - initial release

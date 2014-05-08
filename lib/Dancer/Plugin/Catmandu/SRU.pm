@@ -4,10 +4,6 @@ package Dancer::Plugin::Catmandu::SRU;
 
 Dancer::Plugin::Catmandu::SRU - SRU server backed by a searchable Catmandu::Store
 
-=head1 VERSION
-
-Version 0.02
-
 =cut
 
 our $VERSION = '0.02';
@@ -45,8 +41,8 @@ sub sru_provider {
 
     my $bag = Catmandu->store($setting->{store})->bag($setting->{bag});
 
-    my $default_limit = $bag->default_limit;
-    my $maximum_limit = $bag->maximum_limit;
+    my $default_limit = $setting->{limit} ||= $bag->default_limit;
+    my $maximum_limit = $setting->{maximum_limit} ||= $bag->maximum_limit;
 
     my $database_info = "";
     if ($setting->{title} || $setting->{description}) {
@@ -180,18 +176,45 @@ register_plugin;
 
 1;
 
-=head1 SEE ALSO
+=head1 SYNOPSIS
 
-L<SRU>, L<Catmandu>
+    use Dancer;
+    use Dancer::Plugin::Catmandu::SRU;
+
+    sru_provider '/sru';
+
+=head1 CONFIGURATION
+
+    plugins:
+        'Catmandu::SRU':
+            store: search
+            bag: publicationItem
+            cql_filter: 'submissionstatus exact public'
+            default_record_schema: mods
+            limit: 200
+            maximum_limit: 500
+            record_schemas:
+                -
+                    identifier: "info:srw/schema/1/mods-v3.3"
+                    name: mods
+                    fix: 
+                      - publication_to_mods()
+                    template: views/mods.tt
 
 =head1 AUTHOR
 
 Nicolas Steenlant, C<< <nicolas.steenlant at ugent.be> >>
 
-=head1 LICENSE AND COPYRIGHT
+=head1 CONTRIBUTOR
 
-This program is free software; you can redistribute it and/or modify it
-under the terms of either: the GNU General Public License as published
-by the Free Software Foundation; or the Artistic License.
+Vitali Peil, C<< <vitali.peil at uni-bielefeld.de> >>
 
-See http://dev.perl.org/licenses/ for more information.
+=head1 SEE ALSO
+
+L<SRU>, L<Catmandu>, L<Catmandu::Store>, L<Dancer::Plugin::Catmandu::OAI>
+
+=head1 LICENSE
+
+This library is free software; you can redistribute it and/or modify it under the same terms as Perl itself.
+
+=cut

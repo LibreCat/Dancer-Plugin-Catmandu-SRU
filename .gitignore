@@ -5,9 +5,8 @@
 _build
 blib
 Build
-LICENSE
 Makefile.PL
 MANIFEST*
-META.*
+!META.json
 MYMETA.*
 Dancer-Plugin-Catmandu-SRU-*
