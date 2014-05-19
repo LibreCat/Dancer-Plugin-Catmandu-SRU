@@ -79,19 +79,19 @@ sub sru_provider {
         content_type 'xml';
 
         my $params = params('query');
+        my $operation = $params->{operation} // 'explain';
 
-        given ($params->{operation} // 'explain') {
-            when ('explain') {
-                my $request  = SRU::Request::Explain->new(%$params);
-                my $response = SRU::Response->newFromRequest($request);
+        if ($operation eq 'explain') {
+            my $request  = SRU::Request::Explain->new(%$params);
+            my $response = SRU::Response->newFromRequest($request);
 
-                my $transport   = request->scheme;
-                my $database    = substr request->path, 1;
-                my $host        = request->host; $host =~ s/:.+//;
-                my $port        = request->port;
-                $response->record(SRU::Response::Record->new(
-                    recordSchema => 'http://explain.z3950.org/dtd/2.1/',
-                    recordData   => <<XML,
+            my $transport   = request->scheme;
+            my $database    = substr request->path, 1;
+            my $host        = request->host; $host =~ s/:.+//;
+            my $port        = request->port;
+            $response->record(SRU::Response::Record->new(
+                recordSchema => 'http://explain.z3950.org/dtd/2.1/',
+                recordData   => <<XML,
 <explain xmlns="http://explain.z3950.org/dtd/2.1/">
 <serverInfo protocol="SRU" method="GET" transport="$transport">
 <host>$host</host>
@@ -104,68 +104,67 @@ $schema_info
 $config_info
 </explain>
 XML
-                ));
+            ));
+            return $response->asXML;
+        }
+        elsif ($operation eq 'searchRetrieve') {
+            my $request  = SRU::Request::SearchRetrieve->new(%$params);
+            my $response = SRU::Response->newFromRequest($request);
+            if (@{$response->diagnostics}) {
                 return $response->asXML;
             }
-            when ('searchRetrieve') {
-                my $request  = SRU::Request::SearchRetrieve->new(%$params);
-                my $response = SRU::Response->newFromRequest($request);
-                if (@{$response->diagnostics}) {
+
+            my $schema = $record_schema_map->{$request->recordSchema || $default_record_schema};
+            my $identifier = $schema->{identifier};
+            my $fix = $schema->{fix};
+            my $template = $schema->{template};
+            my $layout = $schema->{layout};
+            my $cql = $params->{query};
+            if ($setting->{cql_filter}) {
+                $cql = "($setting->{cql_filter}) and ($cql)";
+            }
+
+            my $first = $request->startRecord || 1;
+            my $limit = $request->maximumRecords || $default_limit;
+            my $hits = eval {
+                $bag->search(
+                    cql_query    => $cql,
+                    sru_sortkeys => $request->sortKeys,
+                    limit        => $limit,
+                    start        => $first - 1,
+                );
+            } or do {
+                my $e = $@;
+                if ($e =~ /^cql error/) {
+                    $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(10));
                     return $response->asXML;
                 }
+                die $e;
+            };
 
-                my $schema = $record_schema_map->{$request->recordSchema || $default_record_schema};
-                my $identifier = $schema->{identifier};
-                my $fix = $schema->{fix};
-                my $template = $schema->{template};
-                my $layout = $schema->{layout};
-                my $cql = $params->{query};
-                if ($setting->{cql_filter}) {
-                    $cql = "($setting->{cql_filter}) and ($cql)";
-                }
-
-                my $first = $request->startRecord || 1;
-                my $limit = $request->maximumRecords || $default_limit;
-                my $hits = eval {
-                    $bag->search(
-                        cql_query    => $cql,
-                        sru_sortkeys => $request->sortKeys,
-                        limit        => $limit,
-                        start        => $first - 1,
-                    );
-                } or do {
-                    my $e = $@;
-                    if ($e =~ /^cql error/) {
-                        $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(10));
-                        return $response->asXML;
-                    }
-                    die $e;
-                };
-
-                $hits->each(sub {
-                    my $data = $_[0];
-                    my $metadata = "";
-                    my $exporter = Catmandu::Exporter::Template->new(
-                        template => $template,
-                        file     => \$metadata,
-                        fix      => $fix,
-                    );
-                    $exporter->add($data);
-                    $exporter->commit;
-                    $response->addRecord(SRU::Response::Record->new(
-                        recordSchema => $identifier,
-                        recordData   => $metadata,
-                    ));
-                });
-                $response->numberOfRecords($hits->total);
-                return $response->asXML;
-            }
-            default {
-                my $request  = SRU::Request::Explain->new(%$params);
-                my $response = SRU::Response->newFromRequest($request);
-                $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(6));
-                return $response->asXML;
-            }
+            $hits->each(sub {
+                my $data = $_[0];
+                my $metadata = "";
+                my $exporter = Catmandu::Exporter::Template->new(
+                    template => $template,
+                    file     => \$metadata,
+                    fix      => $fix,
+                );
+                $exporter->add($data);
+                $exporter->commit;
+                $response->addRecord(SRU::Response::Record->new(
+                    recordSchema => $identifier,
+                    recordData   => $metadata,
+                ));
+            });
+            $response->numberOfRecords($hits->total);
+            return $response->asXML;
+        }
+        else {
+            my $request  = SRU::Request::Explain->new(%$params);
+            my $response = SRU::Response->newFromRequest($request);
+            $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(6));
+            return $response->asXML;
         }
     };
 }
