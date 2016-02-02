@@ -115,17 +115,26 @@ XML
             }
 
             my $schema = $record_schema_map->{$request->recordSchema || $default_record_schema};
+            unless ( defined $schema ){
+                $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(66));
+                return $response->asXML;
+            }
             my $identifier = $schema->{identifier};
             my $fix = $schema->{fix};
             my $template = $schema->{template};
             my $layout = $schema->{layout};
             my $cql = $params->{query};
             if ($setting->{cql_filter}) {
-                $cql = "($setting->{cql_filter}) and ($cql)";
+                $cql = "( $setting->{cql_filter} ) and ( $cql )";
             }
 
             my $first = $request->startRecord || 1;
-            my $limit = $request->maximumRecords || $default_limit;
+            my $limit = $request->maximumRecords;
+            if( is_natural($limit) ){
+                $limit = $limit > $maximum_limit ? $maximum_limit : $limit;
+            }else{
+                $limit = $default_limit;
+            }
             my $hits = eval {
                 $bag->search(
                     cql_query    => $cql,
