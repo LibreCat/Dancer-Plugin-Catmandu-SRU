@@ -1,6 +1,8 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
 {{$NEXT}}
+
+0.0401  2016-02-02 14:02:09 CET
     - fix capping of limit
     - return diagnostic if schema is missing
 
