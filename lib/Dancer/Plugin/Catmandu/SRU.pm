@@ -115,6 +115,10 @@ XML
             }
 
             my $schema = $record_schema_map->{$request->recordSchema || $default_record_schema};
+            unless ($schema) {
+                $response->addDiagnostic(SRU::Response::Diagnostic->newFromCode(66));
+                return $response->asXML;
+            }
             my $identifier = $schema->{identifier};
             my $fix = $schema->{fix};
             my $template = $schema->{template};
@@ -126,6 +130,10 @@ XML
 
             my $first = $request->startRecord || 1;
             my $limit = $request->maximumRecords || $default_limit;
+            if ($limit > $maximum_limit) {
+                $limit = $maximum_limit;
+            }
+
             my $hits = eval {
                 $bag->search(
                     cql_query    => $cql,
