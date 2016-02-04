@@ -125,7 +125,8 @@ XML
             my $layout = $schema->{layout};
             my $cql = $params->{query};
             if ($setting->{cql_filter}) {
-                $cql = "($setting->{cql_filter}) and ($cql)";
+                #BUG in edismax Solr 3.6: beware of indexes being to close to the first parenthesis
+                $cql = "( $setting->{cql_filter}) and ( $cql)";
             }
 
             my $first = $request->startRecord || 1;
@@ -136,6 +137,7 @@ XML
 
             my $hits = eval {
                 $bag->search(
+                    %{ $setting->{default_search_params} || {} },
                     cql_query    => $cql,
                     sru_sortkeys => $request->sortKeys,
                     limit        => $limit,
