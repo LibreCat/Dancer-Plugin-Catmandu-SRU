@@ -1,6 +1,8 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
 {{$NEXT}}
+
+0.0402  2016-02-09 16:33:08 CET
     - support for default search parameters
 
 0.0401  2016-02-02 14:02:09 CET

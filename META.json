@@ -63,9 +63,10 @@
          "web" : "https://github.com/LibreCat/Dancer-Plugin-Catmandu-SRU"
       }
    },
-   "version" : "0.0401",
+   "version" : "0.0402",
    "x_contributors" : [
       "Nicolas Steenlant <nicolas.steenlant@ugent.be>",
+      "njfranck <njfranck@ca20c521.ugent.be>",
       "vpeil <vitali.peil@uni-bielefeld.de>"
    ]
 }
