@@ -1,6 +1,7 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
 {{$NEXT}}
+    - support for default search parameters
 
 0.0401  2016-02-02 14:02:09 CET
     - fix capping of limit
