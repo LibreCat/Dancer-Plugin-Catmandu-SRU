@@ -125,7 +125,8 @@ XML
             my $layout = $schema->{layout};
             my $cql = $params->{query};
             if ($setting->{cql_filter}) {
-                #BUG in edismax Solr 3.6: beware of indexes being to close to the first parenthesis
+                # space before the filter is to circumvent a bug in the Solr
+                # 3.6 edismax parser
                 $cql = "( $setting->{cql_filter}) and ( $cql)";
             }
 
