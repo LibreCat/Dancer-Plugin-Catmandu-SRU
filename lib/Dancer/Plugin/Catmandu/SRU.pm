@@ -17,6 +17,7 @@ use Catmandu::Fix;
 use Catmandu::Exporter::Template;
 use SRU::Request;
 use SRU::Response;
+use URI::URL;
 
 sub sru_provider {
     my ($path) = @_;
@@ -87,8 +88,9 @@ sub sru_provider {
 
             my $transport   = request->scheme;
             my $database    = substr request->path, 1;
-            my $host        = request->host; $host =~ s/:.+//;
-            my $port        = request->port;
+            my $uri         = URI::URL->new( request->uri_for( request->path_info() ) );
+            my $host        = $uri->host;
+            my $port        = $uri->port;
             $response->record(SRU::Response::Record->new(
                 recordSchema => 'http://explain.z3950.org/dtd/2.1/',
                 recordData   => <<XML,
