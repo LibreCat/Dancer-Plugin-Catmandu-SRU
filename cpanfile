@@ -9,4 +9,3 @@ requires 'Dancer', '1.3123';
 requires 'Catmandu', '>=0.8014';
 requires 'Catmandu::Exporter::Template', '0.03';
 requires 'SRU', '1.01';
-requires 'URI','0';
