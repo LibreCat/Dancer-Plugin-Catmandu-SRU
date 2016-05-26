@@ -4,23 +4,23 @@
       "Nicolas Steenlant, C<< <nicolas.steenlant at ugent.be> >>"
    ],
    "dynamic_config" : 0,
-   "generated_by" : "Dist::Zilla version 5.039, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150005",
+   "generated_by" : "Dist::Zilla version 5.047, Dist::Milla version v1.0.15, CPAN::Meta::Converter version 2.150001",
    "license" : [
       "perl_5"
    ],
    "meta-spec" : {
       "url" : "http://search.cpan.org/perldoc?CPAN::Meta::Spec",
-      "version" : "2"
+      "version" : 2
    },
    "name" : "Dancer-Plugin-Catmandu-SRU",
    "no_index" : {
       "directory" : [
-         "t",
-         "xt",
+         "eg",
+         "examples",
          "inc",
          "share",
-         "eg",
-         "examples"
+         "t",
+         "xt"
       ]
    },
    "prereqs" : {

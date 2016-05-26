@@ -158,10 +158,9 @@ XML
                 my $metadata = "";
                 my $exporter = Catmandu::Exporter::Template->new(
                     template => $template,
-                    file     => \$metadata,
-                    fix      => $fix,
+                    file     => \$metadata
                 );
-                $exporter->add($data);
+                $exporter->add($fix ? $fix->fix($data) : $data);
                 $exporter->commit;
                 $response->addRecord(SRU::Response::Record->new(
                     recordSchema => $identifier,
