@@ -3,7 +3,6 @@ plugins:
     'Catmandu::SRU':
         store: sru
         bag: data
-      #  cql_filter: 'submissionstatus exact public'
         default_record_schema: dc
         limit: 200
         maximum_limit: 500
@@ -11,6 +10,4 @@ plugins:
             -
                 identifier: "info:srw/schema/1/dc-v1.1"
                 name: dc
-#                fix: 
-#                  - nothing()
                 template: dc.tt
