@@ -320,7 +320,7 @@ Below is a sample minimal configuration for the 'sample.yml' demo above:
                     name: dc
                     template: dc.tt
 
-=head1 METADATAPREFIX TEMPLATE
+=head1 METADATA FORMAT TEMPLATE
 
 For each metadata format a Template Toolkit file needs to exist which translate L<Catmandu::Store> records 
 into XML records.  The example below contains an example file to transform 'sample.yml' type records into 

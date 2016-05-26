@@ -137,7 +137,7 @@ Below is a sample minimal configuration for the 'sample.yml' demo above:
                     name: dc
                     template: dc.tt
 
-# METADATAPREFIX TEMPLATE
+# METADATA FORMAT TEMPLATE
 
 For each metadata format a Template Toolkit file needs to exist which translate [Catmandu::Store](https://metacpan.org/pod/Catmandu::Store) records 
 into XML records.  The example below contains an example file to transform 'sample.yml' type records into 
