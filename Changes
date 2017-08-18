@@ -1,6 +1,8 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
 {{$NEXT}}
+
+0.0501  2017-08-18 13:22:45 CEST
   - bump required version of Catmandu::Exporter::Template
 
 0.05  2017-08-18 11:25:12 CEST

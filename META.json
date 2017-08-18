@@ -38,7 +38,7 @@
       "runtime" : {
          "requires" : {
             "Catmandu" : "0.8014",
-            "Catmandu::Exporter::Template" : "0.03",
+            "Catmandu::Exporter::Template" : "0.11",
             "Dancer" : "1.3123",
             "SRU" : "1.01",
             "perl" : "v5.10.1"
@@ -63,7 +63,7 @@
          "web" : "https://github.com/LibreCat/Dancer-Plugin-Catmandu-SRU"
       }
    },
-   "version" : "0.05",
+   "version" : "0.0501",
    "x_contributors" : [
       "Nicolas Steenlant <nicolas.steenlant@gmail.com>",
       "Nicolas Steenlant <nicolas.steenlant@ugent.be>",
