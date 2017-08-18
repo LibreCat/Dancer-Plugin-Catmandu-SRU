@@ -1,6 +1,7 @@
 Revision history for Dancer-Plugin-Catmandu-SRU
 
 {{$NEXT}}
+  - bump required version of Catmandu::Exporter::Template
 
 0.05  2017-08-18 11:25:12 CEST
   - new template_options setting
