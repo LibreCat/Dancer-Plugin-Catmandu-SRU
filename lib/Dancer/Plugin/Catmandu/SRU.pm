@@ -6,7 +6,7 @@ Dancer::Plugin::Catmandu::SRU - SRU server backed by a searchable Catmandu::Stor
 
 =cut
 
-our $VERSION = '0.0403';
+our $VERSION = '0.05';
 
 use Catmandu::Sane;
 use Dancer::Plugin;
