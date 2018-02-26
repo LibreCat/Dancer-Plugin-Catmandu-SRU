@@ -133,7 +133,7 @@ XML
             }
 
             my $first = $request->startRecord || 1;
-            my $limit = $request->maximumRecords || $default_limit;
+            my $limit = is_natural( $request->maximumRecords ) ? $request->maximumRecords : $default_limit;
             if ($limit > $maximum_limit) {
                 $limit = $maximum_limit;
             }
