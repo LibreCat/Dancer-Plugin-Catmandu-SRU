@@ -133,8 +133,8 @@ XML
                 $cql = "( $setting->{cql_filter}) and ( $cql)";
             }
 
-            my $first = $request->startRecord || 1;
-            my $limit = $request->maximumRecords || $default_limit;
+            my $first = $request->startRecord // 1;
+            my $limit = $request->maximumRecords // $default_limit;
             if ($limit > $maximum_limit) {
                 $limit = $maximum_limit;
             }
