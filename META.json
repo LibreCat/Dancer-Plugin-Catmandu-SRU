@@ -71,6 +71,6 @@
       "Patrick Hochstenbach <patrick.hochstenbach@ugent.be>",
       "vpeil <vitali.peil@uni-bielefeld.de>"
    ],
-   "x_serialization_backend" : "Cpanel::JSON::XS version 3.0233"
+   "x_serialization_backend" : "Cpanel::JSON::XS version 3.0239"
 }
 
