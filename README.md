@@ -107,7 +107,7 @@ With the Catmandu configuration files in place records can be imported with the 
 
 # DANCER CONFIGURATION
 
-The Dancer configuration file 'config.yml' contains basic information for the OAI-PMH plugin to work:
+The Dancer configuration file 'config.yml' contains basic information for the Catmandu::SRU plugin to work:
 
     * store - In which Catmandu::Store are the metadata records stored
     * bag   - In which Catmandu::Bag are the records of this 'store' (use: 'data' as default)
@@ -120,7 +120,8 @@ The Dancer configuration file 'config.yml' contains basic information for the OA
         * name - A short descriptive name for the schema
         * fix - Optionally an array of fixes to apply to the records before they are transformed into XML
         * template - The path to a Template Toolkit file to transform your records into this format
-    * template_options - An optional hash of configuration options that will be passed to L<Catmandu::Exporter::Template> or L<Template>.
+    * template_options - An optional hash of configuration options that will be passed to L<Catmandu::Exporter::Template> or L<Template>
+    * content_type - Set a custom content type header, the default is 'text/xml'.
 
 Below is a sample minimal configuration for the 'sample.yml' demo above:
 
