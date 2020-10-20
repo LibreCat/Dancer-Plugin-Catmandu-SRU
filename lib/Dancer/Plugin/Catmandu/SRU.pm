@@ -94,10 +94,10 @@ sub sru_provider {
             my $host        = $uri->host;
             my $port        = $uri->port;
             $response->record(SRU::Response::Record->new(
-                recordSchema => 'http://explain.z3950.org/dtd/2.1/',
+                recordSchema => 'http://explain.z3950.org/dtd/2.0/',
                 recordData   => <<XML,
-<explain xmlns="http://explain.z3950.org/dtd/2.1/">
-<serverInfo protocol="SRU" method="GET" transport="$transport">
+<explain xmlns="http://explain.z3950.org/dtd/2.0/">
+<serverInfo protocol="SRU" transport="$transport">
 <host>$host</host>
 <port>$port</port>
 <database>$database</database>
