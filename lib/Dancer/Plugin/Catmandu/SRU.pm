@@ -16,11 +16,16 @@ use SRU::Request;
 use SRU::Response;
 use Dancer qw(:syntax);
 use Dancer::Plugin;
+use Clone qw(clone);
 
 sub sru_provider {
-    my ($path) = @_;
+    my ($path, %opts) = @_;
 
-    my $setting = plugin_setting;
+    my $setting = clone(plugin_setting);
+
+    foreach my $key (keys %opts) {
+        $setting->{$key} = $opts{$key};
+    }
 
     my $content_type = $setting->{content_type} // 'text/xml';
 
