@@ -21,8 +21,8 @@ Dancer::Plugin::Catmandu::SRU - SRU server backed by a searchable Catmandu::Stor
 
 # DESCRIPTION
 
-[Dancer::Plugin::Catmandu::SRU](https://metacpan.org/pod/Dancer::Plugin::Catmandu::SRU) is a Dancer plugin to provide SRU services for [Catmandu::Store](https://metacpan.org/pod/Catmandu::Store)-s that support
-CQL (such as [Catmandu::Store::ElasticSearch](https://metacpan.org/pod/Catmandu::Store::ElasticSearch)). Follow the installation steps below to setup your own SRU server.
+[Dancer::Plugin::Catmandu::SRU](https://metacpan.org/pod/Dancer%3A%3APlugin%3A%3ACatmandu%3A%3ASRU) is a Dancer plugin to provide SRU services for [Catmandu::Store](https://metacpan.org/pod/Catmandu%3A%3AStore)-s that support
+CQL (such as [Catmandu::Store::ElasticSearch](https://metacpan.org/pod/Catmandu%3A%3AStore%3A%3AElasticSearch)). Follow the installation steps below to setup your own SRU server.
 
 # REQUIREMENTS
 
@@ -141,7 +141,7 @@ Below is a sample minimal configuration for the 'sample.yml' demo above:
 
 # METADATA FORMAT TEMPLATE
 
-For each metadata format a Template Toolkit file needs to exist which translate [Catmandu::Store](https://metacpan.org/pod/Catmandu::Store) records 
+For each metadata format a Template Toolkit file needs to exist which translate [Catmandu::Store](https://metacpan.org/pod/Catmandu%3A%3AStore) records 
 into XML records.  The example below contains an example file to transform 'sample.yml' type records into 
 SRU DC:
 
@@ -200,7 +200,7 @@ Patrick Hochstenbach, `<patrick.hochstenbach at ugent.be>`
 
 # SEE ALSO
 
-[SRU](https://metacpan.org/pod/SRU), [Catmandu](https://metacpan.org/pod/Catmandu), [Catmandu::Store::ElasticSearch](https://metacpan.org/pod/Catmandu::Store::ElasticSearch) , [Catmandu::SRU](https://metacpan.org/pod/Catmandu::SRU)
+[SRU](https://metacpan.org/pod/SRU), [Catmandu](https://metacpan.org/pod/Catmandu), [Catmandu::Store::ElasticSearch](https://metacpan.org/pod/Catmandu%3A%3AStore%3A%3AElasticSearch) , [Catmandu::SRU](https://metacpan.org/pod/Catmandu%3A%3ASRU)
 
 # LICENSE
 
