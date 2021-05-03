@@ -12,15 +12,16 @@ use Catmandu::Sane;
 use Catmandu;
 use Catmandu::Fix;
 use Catmandu::Exporter::Template;
+use Catmandu::Util qw(hash_merge);
 use SRU::Request;
 use SRU::Response;
 use Dancer qw(:syntax);
 use Dancer::Plugin;
 
 sub sru_provider {
-    my ($path) = @_;
+    my ($path, %opts) = @_;
 
-    my $setting = plugin_setting;
+    my $setting = hash_merge(plugin_setting, \%opts);
 
     my $content_type = $setting->{content_type} // 'text/xml';
 
