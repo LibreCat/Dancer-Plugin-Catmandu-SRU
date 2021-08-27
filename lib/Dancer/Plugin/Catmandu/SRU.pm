@@ -17,6 +17,7 @@ use SRU::Request;
 use SRU::Response;
 use Dancer qw(:syntax);
 use Dancer::Plugin;
+use Scalar::Util qw(blessed);
 
 sub sru_provider {
     my ($path, %opts) = @_;
@@ -41,7 +42,8 @@ sub sru_provider {
         $record_schema_map->{$name} = $schema;
     }
 
-    my $bag = Catmandu->store($setting->{store})->bag($setting->{bag});
+    my $store = defined blessed($setting->{store}) ? $setting->{store} : Catmandu->store($setting->{store});
+    my $bag = $store->bag($setting->{bag});
 
     my $default_limit = $setting->{limit} // $bag->default_limit;
     my $maximum_limit = $setting->{maximum_limit} // $bag->maximum_limit;
@@ -378,6 +380,20 @@ this distribution for a complete example:
     $ catmandu convert SRU --base 'http://localhost:3000/sru' --query '(_id = 1)'
 
 
+=head1 ELASTICSEARCH NODES
+
+Additional Elasticsearch options, such as which node(s) to connect to, can be passed in by
+constructing the Catmandu store directly:
+
+    my $options = {
+      store => Catmandu->store('sru', nodes => [$ENV{'ES_HOST'} || 'localhost:9200']),
+    };
+
+    oai_provider '/sru', %$options;
+
+In this example, we read the hostname from the environment variable `ES_HOST`,
+defaulting to localhost:9200 if the variable is empty or not set.
+
 =head1 AUTHOR
 
 Nicolas Steenlant, C<< <nicolas.steenlant at ugent.be> >>
@@ -387,6 +403,8 @@ Nicolas Steenlant, C<< <nicolas.steenlant at ugent.be> >>
 Vitali Peil, C<< <vitali.peil at uni-bielefeld.de> >>
 
 Patrick Hochstenbach, C<< <patrick.hochstenbach at ugent.be> >>
+
+Dan Michael Heggø, C<< <dan.michael.heggo at bibsent.no> >>
 
 =head1 SEE ALSO
 
